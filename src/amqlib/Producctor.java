@@ -41,7 +41,12 @@ public class Producctor {
             producer.send(message);
 			
             System.out.println("Enviado mensaje [" + mundo + "]");
-        } finally {
+        } catch (Exception e){
+    		//e.printStackTrace();
+        	e.printStackTrace();
+        	System.out.println("Error de Aplicación " + e.getMessage());
+    		//ok ="not ok";
+    	}finally {
             // Cerramos los recursos
             producer.close();
             session.close();
