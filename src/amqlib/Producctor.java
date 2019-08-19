@@ -1,6 +1,53 @@
 package amqlib;
 
-import javax.annotation.Resource;
+/*import java.io.BufferedReader;  
+import java.io.InputStreamReader;*/
+
+import javax.naming.*;  
+import javax.jms.*;  
+  
+public class Producctor {  
+	public void enviaMensajeCola(String mundo) throws JMSException {
+		try {   //Create and start connection  
+	        InitialContext ctx=new InitialContext();  
+	        QueueConnectionFactory f=(QueueConnectionFactory)ctx.lookup("jms/ConnectionFactory");  
+	        QueueConnection con=f.createQueueConnection();  
+	        con.start();  
+	        //2) create queue session  
+	        QueueSession ses=con.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);  
+	        //3) get the Queue object  
+	        Queue t=(Queue)ctx.lookup("jms/Queue");  
+	        //4)create QueueSender object         
+	        QueueSender sender=ses.createSender(t);  
+	        //5) create TextMessage object  
+	        TextMessage msg=ses.createTextMessage();  
+	          
+	        //6) write message  
+	        //BufferedReader b=new BufferedReader(new InputStreamReader(System.in));  
+	        
+	        String s = mundo;
+	        msg.setText(s);  
+	        //7) send message  
+	        sender.send(msg);  
+	        System.out.println("Message successfully sent.");  
+	          
+	        //8) connection close
+	        
+	        con.close();
+	      
+	    }
+	    
+	    catch(Exception e){System.out.println("Este es el error " + e);}
+}
+    public static void main(String[] args) throws JMSException {  
+    	Producctor p = new Producctor();
+        p.enviaMensajeCola("Hola Mundo");
+         
+    }  
+}  
+  
+/*import javax.annotation.Resource;
+import amqlib.Main;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -12,13 +59,15 @@ import javax.jms.Session;
 // imports
 
 public class Producctor {
-
+	
     @Resource(mappedName = "jms/ConnectionFactory")
-    private static ConnectionFactory connectionFactory;
+    private ConnectionFactory connectionFactory;
+    
     @Resource(mappedName = "jms/Queue")
-    private static Queue queue;
+    public static Queue queue;
 
     public void enviaMensajeCola(String mundo) throws JMSException {
+    	System.out.println(connectionFactory);
 
         Connection connection = null;
         Session session = null;
@@ -26,8 +75,11 @@ public class Producctor {
         MessageProducer producer = null;
         Message message = null;
         boolean esTransaccional = false;
-
+    //    ConnectionFactory connectionFactory = Main.createJmsConnectionFactory("jms/ConnectionFactory");
+        
+        System.out.println("Valor connectioFactory linea 34 Producctor.java :" + connectionFactory);
         try {
+        	
             connection = connectionFactory.createConnection();
             // Recordar llamar a start() para permitir el envio de mensajes
             connection.start();
@@ -59,4 +111,4 @@ public class Producctor {
         p.enviaMensajeCola("Hola Mundo");
         p.enviaMensajeCola("Adios Mundo");
     }
-}
+}*/
