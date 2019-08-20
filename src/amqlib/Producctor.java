@@ -9,14 +9,15 @@ import javax.jms.*;
 public class Producctor {  
 	public void enviaMensajeCola(String mundo) throws JMSException {
 		try {   //Create and start connection  
-	        InitialContext ctx=new InitialContext();  
+	        InitialContext 	initCtx=new InitialContext();
+	        Context ctx = (Context) initCtx.lookup("java:comp/env");
 	        QueueConnectionFactory f=(QueueConnectionFactory)ctx.lookup("jms/ConnectionFactory");  
 	        QueueConnection con=f.createQueueConnection();  
 	        con.start();  
 	        //2) create queue session  
 	        QueueSession ses=con.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);  
 	        //3) get the Queue object  
-	        Queue t=(Queue)ctx.lookup("jms/Queue");  
+	        Queue t=(Queue)ctx.lookup("jms/queue");  
 	        //4)create QueueSender object         
 	        QueueSender sender=ses.createSender(t);  
 	        //5) create TextMessage object  
@@ -28,7 +29,9 @@ public class Producctor {
 	        String s = mundo;
 	        msg.setText(s);  
 	        //7) send message  
-	        sender.send(msg);  
+	        
+	        sender.send(msg);
+	       
 	        System.out.println("Message successfully sent.");  
 	          
 	        //8) connection close

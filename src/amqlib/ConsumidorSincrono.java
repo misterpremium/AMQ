@@ -1,12 +1,13 @@
 package amqlib;
 
 // imports
-import javax.annotation.Resource;
+/*import javax.annotation.Resource;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
+*/
 //import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
@@ -14,7 +15,76 @@ import javax.jms.Session;
 //import org.apache.activemq.MessageAvailableConsumer;
 //import org.apache.activemq.usage.TempUsage;
 
+import javax.jms.*;
+import javax.naming.Context;
+import javax.naming.InitialContext;  
+  
+public class ConsumidorSincrono {
+	
+	
+	public void recibirMensaje() throws JMSException{
+		 try{  
+	            //1) Create and start connection  
+	            InitialContext initCtx=new InitialContext();
+	            Context ctx = (Context) initCtx.lookup("java:comp/env");
+	            QueueConnectionFactory f=(QueueConnectionFactory)ctx.lookup("jms/ConnectionFactory");  
+	            QueueConnection con=f.createQueueConnection();  
+	            con.start();  
+	            //2) create Queue session  
+	            QueueSession ses=con.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);  
+	            //3) get the Queue object  
+	            Queue t=(Queue)ctx.lookup("jms/queue");  
+	            //4)create QueueReceiver  
+	            QueueReceiver receiver=ses.createReceiver(t);  
+	              
+	            //5) create listener object  
+	            Escuchador listener=new Escuchador();  
+	              
+	            //6) register the listener object with receiver  
+	            receiver.setMessageListener(listener);  
+	              
+	            System.out.println("Receiver1 is ready, waiting for messages...");  
+	            while(true){                  
+	                Thread.sleep(1000);  
+	            }  
+	        }catch(Exception e){System.out.println(e);}  
+		
+		
+	}
+    public static void main(String[] args)  throws JMSException{  
+    	ConsumidorSincrono c = new ConsumidorSincrono();
+    	c.recibirMensaje();
+       
+    }  
+    
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//###############################################################################
+/*
 public class ConsumidorSincrono {
 
     @Resource(mappedName = "jms/ConnectionFactory")
@@ -57,4 +127,4 @@ public class ConsumidorSincrono {
         ConsumidorSincrono p = new ConsumidorSincrono();
         p.recibeMensajeSincronoCola();
     }
-}
+}*/

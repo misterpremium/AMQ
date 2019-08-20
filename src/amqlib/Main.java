@@ -48,7 +48,7 @@ public class Main {
         //*/
 		
 		ConsumidorSincrono c = new ConsumidorSincrono();
-        c.recibeMensajeSincronoCola();
+        c.recibirMensaje();
         System.out.println("DONE");
 	}
 
