@@ -11,7 +11,7 @@ public class Producctor {
 		try {   //Create and start connection  
 	        InitialContext 	initCtx=new InitialContext();
 	        Context ctx = (Context) initCtx.lookup("java:comp/env");
-	        QueueConnectionFactory f=(QueueConnectionFactory)ctx.lookup("jms/ConnectionFactory");  
+	        QueueConnectionFactory f=(QueueConnectionFactory)ctx.lookup("jms/fabrica");  
 	        QueueConnection con=f.createQueueConnection();  
 	        con.start();  
 	        //2) create queue session  
