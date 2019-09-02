@@ -10,14 +10,14 @@ public class Producctor {
 	public void enviaMensajeCola(String mundo) throws JMSException {
 		try {   //Create and start connection  
 	        InitialContext 	initCtx=new InitialContext();
-	        //Context ctx = (Context) initCtx.lookup("java:comp/env");
-	        QueueConnectionFactory f=(QueueConnectionFactory)initCtx.lookup("jms/fabrica");  
+	        Context ctx = (Context) initCtx.lookup("java:comp/env");
+	        QueueConnectionFactory f=(QueueConnectionFactory)ctx.lookup("jms/fabrica");  
 	        QueueConnection con=f.createQueueConnection();  
 	        con.start();  
 	        //2) create queue session  
 	        QueueSession ses=con.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);  
 	        //3) get the Queue object  
-	        Queue t=(Queue)initCtx.lookup("jms/queue");  
+	        Queue t=(Queue)ctx.lookup("jms/queue");  
 	        //4)create QueueSender object         
 	        QueueSender sender=ses.createSender(t);  
 	        //5) create TextMessage object  
