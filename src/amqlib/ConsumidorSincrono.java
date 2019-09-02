@@ -24,16 +24,17 @@ public class ConsumidorSincrono {
 	
 	public void recibirMensaje() throws JMSException{
 		 try{  
-	            //1) Create and start connection  
+			 //1) Create and start connection  
 	            InitialContext initCtx=new InitialContext();
-	            Context ctx = (Context) initCtx.lookup("java:comp/env");
-	            QueueConnectionFactory f=(QueueConnectionFactory)ctx.lookup("jms/fabrica");  
+	            //Context ctx = (Context) initCtx.lookup("java:comp/env");
+	            QueueConnectionFactory f=(QueueConnectionFactory)initCtx.lookup("jms/fabrica");  
 	            QueueConnection con=f.createQueueConnection();  
 	            con.start();  
 	            //2) create Queue session  
 	            QueueSession ses=con.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);  
 	            //3) get the Queue object  
-	            Queue t=(Queue)ctx.lookup("jms/queue");  
+	            InitialContext initCtx2 =new InitialContext();
+	            Queue t=(Queue)initCtx2.lookup("jms/queue");  
 	            //4)create QueueReceiver  
 	            QueueReceiver receiver=ses.createReceiver(t);  
 	              
