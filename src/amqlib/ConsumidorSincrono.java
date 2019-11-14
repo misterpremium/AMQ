@@ -24,7 +24,7 @@ public class ConsumidorSincrono {
 	
 	public void recibirMensaje() throws JMSException{
 		 try{  
-			 //1) Create and start connection  
+	            //1) Create and start connection  
 	            InitialContext initCtx=new InitialContext();
 	            //Context ctx = (Context) initCtx.lookup("java:comp/env");
 	            QueueConnectionFactory f=(QueueConnectionFactory)initCtx.lookup("jms/fabrica");  
