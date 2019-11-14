@@ -16,7 +16,7 @@ import javax.jms.Session;
 //import org.apache.activemq.usage.TempUsage;
 
 import javax.jms.*;
-import javax.naming.Context;
+//import javax.naming.Context;
 import javax.naming.InitialContext;  
   
 public class ConsumidorSincrono {
@@ -27,7 +27,7 @@ public class ConsumidorSincrono {
 	            //1) Create and start connection  
 	            InitialContext initCtx=new InitialContext();
 	            //Context ctx = (Context) initCtx.lookup("java:comp/env");
-	            QueueConnectionFactory f=(QueueConnectionFactory)initCtx.lookup("jms/fabrica");  
+	            QueueConnectionFactory f=(QueueConnectionFactory)initCtx.lookup("java:jboss/exported/jms/fabrica");  
 	            QueueConnection con=f.createQueueConnection();  
 	            con.start();  
 	            //2) create Queue session  
