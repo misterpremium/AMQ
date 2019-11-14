@@ -34,7 +34,7 @@ public class ConsumidorSincrono {
 	            QueueSession ses=con.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);  
 	            //3) get the Queue object  
 	            InitialContext initCtx2 =new InitialContext();
-	            Queue t=(Queue)initCtx2.lookup("jms/queue");  
+	            Queue t=(Queue)initCtx2.lookup("java:jboss/exported/jms/queue");  
 	            //4)create QueueReceiver  
 	            QueueReceiver receiver=ses.createReceiver(t);  
 	              
