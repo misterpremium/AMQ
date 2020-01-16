@@ -44,9 +44,9 @@ public class ConsumidorSincrono {
 	            receiver.setMessageListener(listener);  
 	              
 	            System.out.println("Receiver1 is ready, waiting for messages...");  
-	            while(true){                  
+	                              
 	                Thread.sleep(1000);  
-	            }  
+	            con.close();
 	        }catch(Exception e){System.out.println(e);}  
 		
 		
